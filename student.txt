@@ -1,0 +1,197 @@
+Running com.kg.kite.StudentDemoTest
+[rollno:101 name:ramu, rollno:12 name:Divya, rollno:11 name:Janani]
+rollno:12 name:Divya
+[rollno:101 name:ramu, rollno:12 name:Divya, rollno:11 name:Janani, rollno:502 name:name]
+[rollno:101 name:ramu, rollno:12 name:Divya, rollno:11 name:Janani, rollno:502 name:updatename]
+[rollno:12 name:Divya, rollno:11 name:Janani, rollno:502 name:updatename]
+
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.054 sec
+
+
+package com.kg.kite;
+
+public class Student {
+    private int rollno;
+    private String name;
+
+    Student(int rollno, String name) {
+        this.rollno = rollno;
+        this.name = name;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return the rollno
+     */
+    public int getRollno() {
+        return rollno;
+    }
+
+    /**
+     * @param rollno the rollno to set
+     */
+    public void setRollno(int rollno) {
+        this.rollno = rollno;
+    }
+
+    @Override
+    public String toString() {
+        return "rollno:" + rollno + " name:" + name;
+    }
+}
+
+
+package com.kg.kite;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class StudentDemo {
+    public static ArrayList<Student> studentList = new ArrayList<Student>();
+    static Student newStudent=new Student(502, "name");
+    static Student updateStudent=new Student(502, "updatename");
+    public static void main(String[] args) {
+        // loadStudents();
+        // getAllStudents();
+        // getStudent(12);
+        // newStudent(newStudent);
+        // updateStudent(502,updateStudent);
+        // removeStudent(101);
+    }
+
+    StudentDemo(){
+        loadStudents();   
+    }
+
+    public void loadStudents() {
+        studentList.add(new Student(101, "ramu"));
+        studentList.add(new Student(12, "Divya"));
+        studentList.add(new Student(11, "Janani"));
+    }
+
+    public List<Student> getAllStudents() {
+        System.out.println(studentList);
+        return studentList;
+    }
+
+    public Student getStudent(int rollno) {
+        for (Student student : studentList) {
+            if (student.getRollno() == rollno) {                
+                // System.out.println(String.valueOf(student.getRollno())+student.getName());
+                return student;
+            }
+        }
+        
+        return getStudent(0);
+
+    }
+
+    public void newStudent(Student student) {
+        studentList.add(newStudent);
+        getAllStudents();
+        // System.out.println(studentList);
+    }
+
+    public void updateStudent(int rollno, Student updateStudent) {
+        for (Student student : studentList) {
+            if (student.getRollno() == rollno) {     
+                // System.out.println(studentList.indexOf(student));           
+                studentList.set(studentList.indexOf(student),updateStudent);
+            }
+        }        
+        getAllStudents();
+        // System.out.println(studentList);
+    }
+
+    public void removeStudent(int rollno) {
+        for (Student student : studentList) {
+            if (student.getRollno() == rollno) {     
+                // System.out.println(studentList.indexOf(student));           
+                studentList.remove(studentList.indexOf(student));
+            }
+            break;
+        }        
+        getAllStudents();
+        // System.out.println(studentList);
+    }
+
+}
+
+
+package com.kg.kite;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
+import org.junit.Test;
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class StudentDemoTest {
+    public static ArrayList<Student> studentList = new ArrayList<Student>();
+    Student newStudent = new Student(502, "name");
+    Student updateStudent = new Student(502, "updatename");
+    private static StudentDemo studentDemo;
+
+    @BeforeClass
+    public static void before() {
+        studentDemo = new StudentDemo();
+    }
+
+    @Test
+
+    public void T1getAllStudentsTest() {
+        List<Student> actual = studentDemo.getAllStudents();
+        // System.out.println(actual);
+        // assertEquals(fn+sn, actual);
+
+    }
+
+    @Test
+
+    public void T2getStudentTest() {
+        Student actual = studentDemo.getStudent(12);
+        System.out.println(actual);
+        // assertEquals(fn+sn, actual);
+
+    }
+
+    // newStudent
+    @Test
+
+    public void T3newStudentTest() {
+        studentDemo.newStudent(newStudent);
+        // assertEquals(fn+sn, actual);
+
+    }
+
+    @Test
+
+    public void T4updateStudentTest() {
+        studentDemo.updateStudent(502, updateStudent);
+        // assertEquals(fn+sn, actual);
+
+    }
+
+    @Test
+
+    public void T5removeStudentTest() {
+        studentDemo.removeStudent(101);
+        // assertEquals(fn+sn, actual);
+
+    }
+}
